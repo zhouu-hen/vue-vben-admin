@@ -19,7 +19,7 @@ const account: AppRouteModule = {
       name: 'AboutPage',
       component: () => import('/@/views/sys/account/index.vue'),
       meta: {
-        title: t('routes.dashboard.about'),
+        title: t('sys.login.userName'),
         icon: 'simple-icons:about-dot-me',
         hideMenu: true,
       },

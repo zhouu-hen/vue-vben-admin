@@ -10,6 +10,14 @@
           :placeholder="t('sys.login.userName')"
         />
       </FormItem>
+      <FormItem name="邮箱" class="enter-x" :rules="[{ required: true, message: '请输入邮箱' }]">
+        <Input
+          class="fix-auto-fill"
+          size="large"
+          v-model:value="formData.email"
+          placeholder="邮箱"
+        />
+      </FormItem>
       <FormItem name="mobile" class="enter-x">
         <Input
           size="large"
@@ -41,7 +49,6 @@
           :placeholder="t('sys.login.confirmPassword')"
         />
       </FormItem>
-
       <FormItem class="enter-x" name="policy">
         <!-- No logic, you need to deal with it yourself -->
         <Checkbox v-model:checked="formData.policy" size="small">
@@ -88,6 +95,7 @@
     confirmPassword: '',
     mobile: '',
     sms: '',
+    email: '',
     policy: false,
   });
 

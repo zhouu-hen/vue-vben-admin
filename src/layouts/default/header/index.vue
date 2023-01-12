@@ -3,12 +3,7 @@
     <!-- left start -->
     <div :class="`${prefixCls}-left`">
       <!-- logo -->
-      <AppLogo
-        v-if="getShowHeaderLogo || getIsMobile"
-        :class="`${prefixCls}-logo`"
-        :theme="getHeaderTheme"
-        :style="getLogoWidth"
-      />
+
       <LayoutTrigger
         v-if="
           (getShowContent && getShowHeaderTrigger && !getSplit && !getIsMixSidebar) || getIsMobile
@@ -60,7 +55,6 @@
   import { propTypes } from '/@/utils/propTypes';
 
   import { Layout } from 'ant-design-vue';
-  import { AppLogo } from '/@/components/Application';
   import LayoutMenu from '../menu/index.vue';
   import LayoutTrigger from '../trigger/index.vue';
 
@@ -85,7 +79,6 @@
     name: 'LayoutHeader',
     components: {
       Header: Layout.Header,
-      AppLogo,
       LayoutTrigger,
       LayoutBreadcrumb,
       LayoutMenu,

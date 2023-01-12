@@ -5,23 +5,21 @@ import { t } from '/@/hooks/web/useI18n';
 
 const account: AppRouteModule = {
   path: '/account',
-  name: 'About',
+  name: 'Account',
   component: LAYOUT,
-  redirect: '/account/index',
+  redirect: '/account/setting',
   meta: {
-    icon: 'simple-icons:about-dot-me',
-    title: t('sys.login.userName'),
     hideChildrenInMenu: true,
+    title: t('routes.demo.page.accountSetting'),
+    orderNo: 20,
   },
   children: [
     {
-      path: 'index',
-      name: 'AboutPage',
-      component: () => import('/@/views/sys/account/index.vue'),
+      path: 'setting',
+      name: 'AccountSettingPage',
+      component: () => import('/@/views/account/setting/index.vue'),
       meta: {
-        title: t('sys.login.userName'),
-        icon: 'simple-icons:about-dot-me',
-        hideMenu: true,
+        title: t('routes.demo.page.accountSetting'),
       },
     },
   ],

@@ -4,7 +4,6 @@
   import { computed, defineComponent, unref, toRef } from 'vue';
   import { BasicMenu } from '/@/components/Menu';
   import { SimpleMenu } from '/@/components/SimpleMenu';
-  import { AppLogo } from '/@/components/Application';
 
   import { MenuModeEnum, MenuSplitTyeEnum } from '/@/enums/menuEnum';
 
@@ -18,7 +17,6 @@
   import { isUrl } from '/@/utils/is';
   import { useRootSetting } from '/@/hooks/setting/useRootSetting';
   import { useAppInject } from '/@/hooks/web/useAppInject';
-  import { useDesign } from '/@/hooks/web/useDesign';
 
   export default defineComponent({
     name: 'LayoutMenu',
@@ -53,8 +51,6 @@
       } = useMenuSetting();
       const { getShowLogo } = useRootSetting();
 
-      const { prefixCls } = useDesign('layout-menu');
-
       const { menusRef } = useSplitMenu(toRef(props, 'splitType'));
 
       const { getIsMobile } = useAppInject();
@@ -81,17 +77,6 @@
           height: `calc(100% - ${unref(getIsShowLogo) ? '48px' : '0px'})`,
         };
       });
-
-      const getLogoClass = computed(() => {
-        return [
-          `${prefixCls}-logo`,
-          unref(getComputedMenuTheme),
-          {
-            [`${prefixCls}--mobile`]: unref(getIsMobile),
-          },
-        ];
-      });
-
       const getCommonProps = computed(() => {
         const menus = unref(menusRef);
         return {
@@ -126,18 +111,6 @@
         return false;
       }
 
-      function renderHeader() {
-        if (!unref(getIsShowLogo) && !unref(getIsMobile)) return null;
-
-        return (
-          <AppLogo
-            showTitle={!unref(getCollapsed)}
-            class={unref(getLogoClass)}
-            theme={unref(getComputedMenuTheme)}
-          />
-        );
-      }
-
       function renderMenu() {
         const { menus, ...menuProps } = unref(getCommonProps);
         // console.log(menus);
@@ -159,7 +132,6 @@
       return () => {
         return (
           <>
-            {renderHeader()}
             {unref(getUseScroll) ? (
               <ScrollContainer style={unref(getWrapperStyle)}>{() => renderMenu()}</ScrollContainer>
             ) : (

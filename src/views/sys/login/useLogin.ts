@@ -45,7 +45,7 @@ export function useFormRules(formData?: Recordable) {
   const getPasswordFormRule = computed(() => createRule(t('sys.login.passwordPlaceholder')));
   const getSmsFormRule = computed(() => createRule(t('sys.login.smsPlaceholder')));
   const getMobileFormRule = computed(() => createRule(t('sys.login.mobilePlaceholder')));
-
+  const getEmailFormRule = computed(() => createRule('请输入邮箱'));
   const validatePolicy = async (_: RuleObject, value: boolean) => {
     return !value ? Promise.reject(t('sys.login.policyPlaceholder')) : Promise.resolve();
   };
@@ -67,17 +67,19 @@ export function useFormRules(formData?: Recordable) {
     const passwordFormRule = unref(getPasswordFormRule);
     const smsFormRule = unref(getSmsFormRule);
     const mobileFormRule = unref(getMobileFormRule);
+    const emailFormRule = unref(getEmailFormRule);
 
     const mobileRule = {
       sms: smsFormRule,
-      mobile: mobileFormRule,
+      phone: mobileFormRule,
     };
     switch (unref(currentState)) {
       // register form rules
       case LoginStateEnum.REGISTER:
         return {
-          account: accountFormRule,
+          username: accountFormRule,
           password: passwordFormRule,
+          email: emailFormRule,
           confirmPassword: [
             { validator: validateConfirmPassword(formData?.password), trigger: 'change' },
           ],
@@ -88,7 +90,7 @@ export function useFormRules(formData?: Recordable) {
       // reset password form rules
       case LoginStateEnum.RESET_PASSWORD:
         return {
-          account: accountFormRule,
+          username: accountFormRule,
           ...mobileRule,
         };
 
@@ -99,7 +101,7 @@ export function useFormRules(formData?: Recordable) {
       // login form rules
       default:
         return {
-          account: accountFormRule,
+          username: accountFormRule,
           password: passwordFormRule,
         };
     }

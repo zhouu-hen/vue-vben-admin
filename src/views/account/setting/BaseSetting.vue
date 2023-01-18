@@ -31,7 +31,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
 
   import headerImg from '/@/assets/images/header.jpg';
-  import { getUserInfo } from '/@/api/sys/user';
+  import { getUserInfo, editUserInfo } from '/@/api/sys/user';
   import { baseSetschemas } from './data';
   import { useUserStore } from '/@/store/modules/user';
   import { uploadApi } from '/@/api/sys/upload';
@@ -49,7 +49,7 @@
       const { createMessage } = useMessage();
       const userStore = useUserStore();
 
-      const [register, { setFieldsValue, validate }] = useForm({
+      const [register, { setFieldsValue, validate, getFieldsValue }] = useForm({
         labelWidth: 120,
         schemas: baseSetschemas,
         showActionButtonGroup: false,
@@ -65,17 +65,21 @@
         return avatar || headerImg;
       });
 
-      function updateAvatar({ src, data }) {
+      function updateAvatar({ data }) {
         const userinfo = userStore.getUserInfo;
-        userinfo.avatar = src;
+        userinfo.avatar = data;
         userStore.setUserInfo(userinfo);
-        console.log('data', data);
       }
 
       const handleSubmit = async () => {
-        await validate();
-
-        createMessage.success('更新成功！');
+        try {
+          await validate();
+          const ret = await editUserInfo(getFieldsValue());
+          console.log(ret);
+          createMessage.success('更新用户信息成功！');
+        } catch (error) {
+          createMessage.error('请完善用户信息');
+        }
       };
 
       return {

@@ -1,5 +1,5 @@
 export default {
-  footer: { onlinePreview: '在线预览', onlineDocument: '在线文档' },
+  footer: { onlinePreview: '黄冈师范学院', onlineDocument: '高校体育管理系统' },
   header: {
     // user dropdown
     dropdownItemDoc: '文档',

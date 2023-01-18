@@ -6,6 +6,20 @@ export interface LoginParams {
   password: string;
 }
 
+export interface RegisterParams {
+  username: string;
+  password: string;
+  phone: string;
+  email: string;
+}
+
+export interface EditUserInfoParams {
+  username: string;
+  password: string;
+  phone: string;
+  email: string;
+}
+
 export interface RoleInfo {
   roleName: string;
   value: string;

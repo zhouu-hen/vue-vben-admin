@@ -6,7 +6,7 @@
           <ListItemMeta>
             <template #title>
               {{ item.title }}
-              <div class="extra" v-if="item.extra">
+              <div class="extra" v-if="item.extra" @click="edit(item.key)">
                 {{ item.extra }}
               </div>
             </template>
@@ -18,20 +18,43 @@
       </template>
     </List>
   </CollapseContainer>
+
+  <UpdatePassword ref="passwordModal" />
 </template>
 <script lang="ts">
   import { List } from 'ant-design-vue';
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { CollapseContainer } from '/@/components/Container/index';
-
   import { secureSettingList } from './data';
+  import UpdatePassword from './UpdatePassword.vue';
 
   export default defineComponent({
-    components: { CollapseContainer, List, ListItem: List.Item, ListItemMeta: List.Item.Meta },
     setup() {
+      const passwordModal = ref<null | InstanceType<typeof UpdatePassword>>(null);
+
+      const edit = (key) => {
+        switch (+key) {
+          case 1:
+            passwordModal.value?.openModal();
+            break;
+
+          default:
+            break;
+        }
+      };
+
       return {
+        edit,
+        passwordModal,
         list: secureSettingList,
       };
+    },
+    components: {
+      CollapseContainer,
+      List,
+      ListItem: List.Item,
+      ListItemMeta: List.Item.Meta,
+      UpdatePassword,
     },
   });
 </script>

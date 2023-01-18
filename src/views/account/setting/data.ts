@@ -1,4 +1,6 @@
 import { FormSchema } from '/@/components/Form/index';
+import type { Rule } from 'ant-design-vue/es/form';
+import { validateEmail, validateUsername } from '/@/api/sys/user';
 
 export interface ListItem {
   key: string;
@@ -29,6 +31,16 @@ export const settingList = [
 ];
 
 // 基础设置 form
+const emailReg = /^[a-zA-Z0-9]+([-_.][A-Za-zd]+)*@([a-zA-Z0-9]+[-.])+[A-Za-zd]{2,5}$/;
+const validEmail = async (_rule: Rule, value: string) => {
+  if (!emailReg.test(value)) return Promise.reject(new Error(`${value} 邮箱格式有误`));
+  await validateEmail({ email: value });
+};
+const validUsername = async (_rule: Rule, value: string) => {
+  if (value.length < 5) return Promise.reject(new Error(`用户名长度至少五位`));
+  await validateUsername({ username: value });
+};
+
 export const baseSetschemas: FormSchema[] = [
   {
     field: 'email',
@@ -40,6 +52,7 @@ export const baseSetschemas: FormSchema[] = [
         type: 'email',
         required: true,
       },
+      { validator: validEmail, trigger: 'blur' },
     ],
   },
   {
@@ -51,6 +64,7 @@ export const baseSetschemas: FormSchema[] = [
       {
         required: true,
       },
+      { validator: validUsername, trigger: 'blur' },
     ],
   },
   {
@@ -60,10 +74,11 @@ export const baseSetschemas: FormSchema[] = [
     colProps: { span: 18 },
   },
   {
-    field: 'address',
+    field: 'role',
     component: 'Input',
-    label: '所在部门',
+    label: '部门角色',
     colProps: { span: 18 },
+    dynamicDisabled: true,
   },
   {
     field: 'introduction',
@@ -98,40 +113,6 @@ export const secureSettingList: ListItem[] = [
     title: '备用邮箱',
     description: '已绑定邮箱：：ant***sign.com',
     extra: '修改',
-  },
-  {
-    key: '5',
-    title: 'MFA 设备',
-    description: '未绑定 MFA 设备，绑定后，可以进行二次确认',
-    extra: '修改',
-  },
-];
-
-// 账号绑定 list
-export const accountBindList: ListItem[] = [
-  {
-    key: '1',
-    title: '绑定淘宝',
-    description: '当前未绑定淘宝账号',
-    extra: '绑定',
-    avatar: 'ri:taobao-fill',
-    color: '#ff4000',
-  },
-  {
-    key: '2',
-    title: '绑定支付宝',
-    description: '当前未绑定支付宝账号',
-    extra: '绑定',
-    avatar: 'fa-brands:alipay',
-    color: '#2eabff',
-  },
-  {
-    key: '3',
-    title: '绑定钉钉',
-    description: '当前未绑定钉钉账号',
-    extra: '绑定',
-    avatar: 'ri:dingding-fill',
-    color: '#2eabff',
   },
 ];
 

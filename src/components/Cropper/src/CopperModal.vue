@@ -185,8 +185,8 @@
           const blob = dataURLtoBlob(previewSource.value);
           try {
             setModalProps({ confirmLoading: true });
-            const result = await uploadApi({ name: 'file', file: blob, filename });
-            emit('uploadSuccess', { source: previewSource.value, data: result.url });
+            const { data } = await uploadApi({ name: 'file', file: blob, filename });
+            emit('uploadSuccess', { source: previewSource.value, data: data.url });
             closeModal();
           } finally {
             setModalProps({ confirmLoading: false });

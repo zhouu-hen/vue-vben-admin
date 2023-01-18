@@ -2,15 +2,22 @@
   <template v-if="getShow">
     <LoginFormTitle class="enter-x" />
     <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
-      <FormItem name="account" class="enter-x">
+      <FormItem name="username" class="enter-x">
         <Input
           class="fix-auto-fill"
           size="large"
-          v-model:value="formData.account"
+          v-model:value="formData.username"
           :placeholder="t('sys.login.userName')"
         />
       </FormItem>
-      <FormItem name="邮箱" class="enter-x" :rules="[{ required: true, message: '请输入邮箱' }]">
+      <FormItem
+        name="email"
+        class="enter-x"
+        :rules="[
+          { required: true, message: '请输入邮箱' },
+          { type: 'email', message: '请输入有效邮箱' },
+        ]"
+      >
         <Input
           class="fix-auto-fill"
           size="large"
@@ -18,10 +25,10 @@
           placeholder="邮箱"
         />
       </FormItem>
-      <FormItem name="mobile" class="enter-x">
+      <FormItem name="phone" class="enter-x">
         <Input
           size="large"
-          v-model:value="formData.mobile"
+          v-model:value="formData.phone"
           :placeholder="t('sys.login.mobile')"
           class="fix-auto-fill"
         />
@@ -80,6 +87,7 @@
   import { CountdownInput } from '/@/components/CountDown';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useLoginState, useFormRules, useFormValid, LoginStateEnum } from './useLogin';
+  import { registerApi } from '/@/api/sys/user';
 
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
@@ -90,12 +98,12 @@
   const loading = ref(false);
 
   const formData = reactive({
-    account: '',
+    username: '',
     password: '',
     confirmPassword: '',
-    mobile: '',
-    sms: '',
+    phone: '',
     email: '',
+    sms: '',
     policy: false,
   });
 
@@ -108,5 +116,7 @@
     const data = await validForm();
     if (!data) return;
     console.log(data);
+    await registerApi(data);
+    handleBackLogin()
   }
 </script>

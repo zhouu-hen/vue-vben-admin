@@ -37,7 +37,7 @@ export const getRoleListByPage = (params?: RolePageParams) =>
 export const getAllRoleList = (params?: RoleParams) =>
   defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
 
-export const setRoleStatus = (id: number, status: string) =>
+export const setRoleStatus = (id: number, status: number) =>
   defHttp.post({ url: Api.setRoleStatus, params: { id, status } });
 
 export const isAccountExist = (account: string) =>

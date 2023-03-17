@@ -28,6 +28,14 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: '价格',
+    dataIndex: 'price',
+    width: 220,
+    customRender({ record }) {
+      return record.price + ' 元';
+    },
+  },
+  {
     title: '描述',
     dataIndex: 'desc',
   },
@@ -55,7 +63,7 @@ export const columns: BasicColumn[] = [
         onChange(checked: boolean) {
           record.pendingStatus = true;
           const newStatus = checked ? 1 : 0;
-          setRoleStatus(record.id, newStatus)
+          setPlaceStatus({ id: record.id, status: newStatus })
             .then(() => {
               record.status = newStatus;
               createMessage.success(`已成功修改角色状态`);
@@ -93,7 +101,6 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-
 export const formSchema: FormSchema[] = [
   {
     field: 'name',
@@ -114,6 +121,11 @@ export const formSchema: FormSchema[] = [
     },
   },
   {
+    label: '价格/元',
+    field: 'price',
+    component: 'InputNumber',
+  },
+  {
     label: '描述',
     field: 'desc',
     component: 'InputTextArea',
@@ -122,6 +134,6 @@ export const formSchema: FormSchema[] = [
     label: ' ',
     field: 'headerImg',
     slot: 'menu',
-    component: 'Input'
+    component: 'Input',
   },
 ];

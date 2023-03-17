@@ -32,6 +32,13 @@ export const columns: BasicColumn[] = [
     dataIndex: 'num',
   },
   {
+    title: '价格',
+    dataIndex: 'price',
+    customRender: ({ record }) => {
+      return record.price + ' 元';
+    },
+  },
+  {
     title: '描述',
     dataIndex: 'desc',
   },
@@ -108,6 +115,11 @@ export const formSchema: FormSchema[] = [
     field: 'num',
     label: '器材数量',
     required: true,
+    component: 'InputNumber',
+  },
+  {
+    label: '价格/元',
+    field: 'price',
     component: 'InputNumber',
   },
   {

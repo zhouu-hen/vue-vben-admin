@@ -56,6 +56,7 @@
     "qs": "^6.10.3",
     "resize-observer-polyfill": "^1.5.1",
     "showdown": "^2.1.0",
+    "socket.io-client": "^4.6.1",
     "sortablejs": "^1.15.0",
     "tinymce": "^5.10.3",
     "vditor": "^3.8.13",
@@ -185,5 +186,6 @@
     "commitizen": {
       "path": "node_modules/cz-git"
     }
-  }
+  },
+  "__npminstall_done": false
 }
